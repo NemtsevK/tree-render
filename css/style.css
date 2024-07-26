@@ -1,0 +1,92 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --background-primary: #ffffff;
+  --background-secondary: #5f91ff;
+  --background-special: #f4f4f4;
+  --text-primary: #262626;
+  --text-secondary: #ffffff;
+  --focus: #2450ff;
+}
+
+.page {
+  height: 100%;
+}
+
+.page__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 0;
+  height: 100%;
+  font-family: "Arial", sans-serif;
+  color: var(--text-primary);
+}
+
+.title {
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.input {
+  font-size: 20px;
+  width: 600px;
+  max-width: 100%;
+  height: 40px;
+}
+
+.input:focus {
+  border-color: var(--focus);
+  outline: none;
+}
+
+.output {
+  margin: 0;
+  padding: 30px;
+  font-size: 18px;
+  background: var(--background-special);
+}
+
+.button {
+  display: block;
+  padding: 10px 30px;
+  font-family: "Onest", "Arial", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  background-color: var(--background-primary);
+  outline: 2px solid var(--text-primary);
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.button:hover {
+  color: var(--text-secondary);
+  background-color: var(--background-secondary);
+  outline: none;
+}
+
+.button:active {
+  color: var(--text-primary);
+  background-color: var(--background-primary);
+  outline: 2px solid var(--text-primary);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--focus);
+}
+
