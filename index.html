@@ -11,12 +11,31 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="page__body">
-<h1 class="title">Tree Renderer</h1>
-<form class="form">
-  <input class="input" value="(1 (299 (10) 6 (4 5858 6 (7) 108 9 (9)) 3) 2 5 (1) 6)" placeholder="Введите текстовое определение дерева" aria-label="Введите текстовое определение дерева" required>
-  <button class="button">Отправить</button>
-</form>
-<pre class="output"></pre>
-<script src="js/script.js"></script>
+<header class="header">
+  <div class="container">
+    <h1 class="main__title">Tree Renderer</h1>
+  </div>
+</header>
+<main class="main">
+  <div class="container">
+    <img src="" alt="">
+    <form class="form" novalidate>
+      <textarea class="form__input" id="tree-input" placeholder="Введите текстовое определение дерева" aria-label="Введите текстовое определение дерева" rows="5" required>(1 (2 (4 5 6 (7) 108 (9)) 3))</textarea>
+      <span class="form__text-error" id="tree-input-error"></span>
+      <div class="form__buttons">
+        <button class="form__button button">Отправить</button>
+        <button class="form__reset button" type="button">Сбросить</button>
+      </div>
+    </form>
+  </div>
+  <div class="main__output">
+    <pre class="main__output-text main__output-text--hide"></pre>
+  </div>
+  <div class="table"></div>
+</main>
+<footer class="footer">
+  <div class="container"></div>
+</footer>
+<script src="js/script.js" type="module"></script>
 </body>
 </html>
