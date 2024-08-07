@@ -5,8 +5,8 @@ export const SPACES = /^[\s\n\t]+$/;
 export const inputOption = {
   id: 'tree-input',
   pattern: {
-    string: /^([0-9\s)(])+$/,
-    name: 'Введён неправильный формат',
+    string: /^\([0-9\s()]*\)$/,
+    name: 'Введён неправильный формат! Шаблон: (1 2 (3) 4)',
   },
   max: 1000,
   required: true,
@@ -20,9 +20,7 @@ function initValidation({ form, inputElement, textElement, button }) {
 
   inputElement.addEventListener('input', () => onElementInput(inputElement, textElement, button))
 
-  button.addEventListener('enable-button', () => {
-    enableButton = isEnableButton(inputElement)
-  });
+  button.addEventListener('enable-button', () => enableButton = isEnableButton(inputElement));
 
   form.addEventListener('submit', (event) => onFormSubmit(event, enableButton, inputElement, textElement));
 }
@@ -80,7 +78,7 @@ function isEnableButton(inputElement) {
     pattern.string.test(value)
     && value.length <= max
     && SPACES.test(value) === false
-    && (value !== '' && required === false || required === true)
+    && (value !== '' && required === true || required === false)/*проверить в company*/
     || value === '' && required === false
   );
 }

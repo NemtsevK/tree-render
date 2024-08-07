@@ -9,7 +9,7 @@ const BRANCH_STRING = BRANCH_SYMBOL + EMPTY_SYMBOL.repeat(3);
 const EMPTY_STRING = EMPTY_SYMBOL.repeat(4);
 
 /**
- *
+ * инициализация дерева
  * @param inputElement
  * @param textElement
  */
@@ -30,23 +30,13 @@ function initTree(inputElement, textElement) {
 }
 
 /**
- * формирование древа
+ * формирование дерева
  * @param elements
  * @returns {string}
  */
 function renderTree(elements) {
   const matrix = transpose(changeMatrixElements(elements));
-
-  let result = '';
-
-  for (let col = 0; col < matrix.length; col++) {
-    for (let row = 0; row < matrix[col].length; row++) {
-      result += matrix[col][row];
-    }
-    result += '\n';
-  }
-
-  return result;
+  return matrix.map(row => row.join('')).join('\n');
 }
 
 /**
@@ -151,11 +141,11 @@ function findNumberRows(matrix, col, row) {
 function addParentsBranches(elements) {
   const matrix = convertToMatrix(elements);
 
-  for (let col = 0; col < matrix.length; col++) {
-    for (let row = 0; row < matrix[col].length; row++) {
+  for (let col = 0; col < matrix.length - 1; col++) {
+    for (let row = 0; row < matrix[col].length - 1; row++) {
       //если текущий элемент не является последним
       //и текущий элемент и следующий элемент по диагонали являются числами
-      if (col < matrix.length - 1 && row < matrix[col].length - 1 && isNumeric(matrix[col][row]) && isNumeric(matrix[col + 1][row + 1])) {
+      if (isNumeric(matrix[col][row]) && isNumeric(matrix[col + 1][row + 1])) {
         matrix[col + 1][row] = PARENT_STRING;
       }
     }
@@ -191,60 +181,79 @@ function getMaxCountDigits(matrix, i) {
 function convertToMatrix(elements) {
   const columns = elements.map(item => item.column);
   const countColumn = Math.max(...columns) + 1;
-  let matrix = [];
 
-  for (let col = 0; col < countColumn; col++) {
-    matrix[col] = [];
-
-    for (let j = 0; j < elements.length; j++) {
-      const cell = elements[j].column === col ? elements[j].number : null;
-      matrix[col].push(cell);
-    }
-  }
-
-  return matrix;
+  return Array.from({ length: countColumn }, (index, col) =>
+    elements.map(item => (item.column === col ? item.number : null))
+  );
 }
 
-/* вытащить функцию parseSubtree во внешнюю область*/
 /**
  * Преобразование строки в массив с данными об узлах дерева
  * @param string
  * @returns {*[]}
  */
 function parseTree(string) {
-  let index = 0;
-
-  function parseSubtree(result = [], level = 0) {
-
-    while (index < string.length) {
-      if (string[index] === START_SYMBOL) {
-        index++;
-        result = parseSubtree(result, level + 1);
-      } else if (string[index] === END_SYMBOL) {
-        index++;
-        return result;
-      } else if (string[index] === EMPTY_SYMBOL) {
-        index++;
-      } else {
-        let digit = '';
-
-        while (index < string.length && string[index].match(/[0-9]/)) {
-          digit += string[index];
-          index++;
-        }
-
-        result.push({ number: Number(digit), column: level });
-      }
-    }
+  if (validateTree(string)) {
+    const [result, _] = parseSubtree(string, 1);
     return result;
+  } else {
+    throw new Error('Количество открывающих и закрывающих скобок не совпадает');
+  }
+}
+
+/**
+ * Рекурсивная функция для обработки поддеревьев
+ * @param {string} string - Строка для парсинга
+ * @param {number} index - Текущий индекс в строке
+ * @param {Array} result - Массив результатов
+ * @param {number} level - Уровень текущего узла
+ * @returns {[Array, number]} - Массив с данными об узлах дерева и обновленный индекс
+ */
+function parseSubtree(string, index, result = [], level = 0) {
+  while (index < string.length) {
+    if (string[index] === START_SYMBOL) {
+      index++;
+      [result, index] = parseSubtree(string, index, result, level + 1); // обновляем индекс
+    } else if (string[index] === END_SYMBOL) {
+      index++;
+      return [result, index];
+    } else if (string[index] === EMPTY_SYMBOL) {
+      index++;
+    } else {
+      let digit = '';
+
+      while (index < string.length && string[index].match(/[0-9]/)) {
+        digit += string[index];
+        index++;
+      }
+
+      result.push({ number: Number(digit), column: level });
+    }
+  }
+  return [result, index];
+}
+
+/**
+ *
+ * @param string
+ * @return {boolean}
+ */
+function validateTree(string) {
+  const patternStart = /\(/g
+  const patternEnd = /\)/g
+
+  let countStart = 0
+  let countEnd = 0
+
+  while(patternStart.exec(string)) {
+    countStart++;
   }
 
-  if (string[0] === START_SYMBOL && string[string.length - 1] === END_SYMBOL) {
-    index = 1;
-    return parseSubtree();
-  } else {
-    throw new Error('Неправильный формат');
+  while(patternEnd.exec(string)) {
+    countEnd++;
   }
+
+  return countStart === countEnd;
 }
 
 /**
@@ -253,19 +262,7 @@ function parseTree(string) {
  * @returns {*[]}
  */
 function transpose(matrix) {
-  const rows = matrix.length;
-  const cols = matrix[0].length;
-  const transposed = [];
-
-  for (let i = 0; i < cols; i++) {
-    transposed[i] = [];
-
-    for (let j = 0; j < rows; j++) {
-      transposed[i][j] = matrix[j][i];
-    }
-  }
-
-  return transposed;
+  return matrix[0].map((item, colIndex) => matrix.map(row => row[colIndex]));
 }
 
 /**
