@@ -8,22 +8,25 @@
   <link rel="icon" href="images/favicons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="images/favicons/apple.png">
   <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="fonts/open-sans-regular.woff2" type="font/woff2" as="font" crossorigin="anonymous">
+  <link rel="preload" href="fonts/find-cartoon.woff2" type="font/woff2" as="font" crossorigin="anonymous">
+  <link rel="preload" href="fonts/segoe-ui-mono.woff2" type="font/woff2" as="font" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="page__body">
 <header class="header">
   <div class="container">
-    <h1 class="main__title">Tree Renderer</h1>
+    <h1 class="main__title">Tree Render</h1>
   </div>
 </header>
 <main class="main">
   <div class="container">
-    <img src="" alt="">
+    <img class="main__image" src="images/content/tree.jpg" width="200" height="200" alt="Дерево">
     <form class="form" novalidate>
       <textarea class="form__input" id="tree-input" placeholder="Введите текстовое определение дерева" aria-label="Введите текстовое определение дерева" rows="5" required>(1 (2 (4 5 6 (7) 108 (9)) 3))</textarea>
       <span class="form__text-error" id="tree-input-error"></span>
       <div class="form__buttons">
-        <button class="form__button button">Отправить</button>
+        <button class="form__button button">Отрисовать</button>
         <button class="form__reset button" type="button">Сбросить</button>
       </div>
     </form>
@@ -34,7 +37,16 @@
   <div class="table"></div>
 </main>
 <footer class="footer">
-  <div class="container"></div>
+  <div class="container">
+    <div class="social">
+      <div class="social__item">
+        <a class="social__item-link social__item-link--github" href="https://github.com/NemtsevK/tree-render/" title="Исходный код на GitHub" aria-label="Исходный код на GitHub" target="_blank" rel="nofollow noopener"></a>
+      </div>
+      <div class="social__item">
+        <a class="social__item-link social__item-link--developer" href="http://nemtsevk.ru" title="Разработал Константин Немцев" aria-label="Разработал Константин Немцев" target="_blank" rel="nofollow noopener"></a>
+      </div>
+    </div>
+  </div>
 </footer>
 <script src="js/main.js" type="module"></script>
 </body>

@@ -1,3 +1,27 @@
+@font-face {
+  font-family: "Find Cartoon";
+  src: url("../fonts/find-cartoon.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/open-sans-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap
+}
+
+@font-face {
+  font-family: "Segoe UI Mono";
+  src: url("../fonts/segoe-ui-mono.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap
+}
+
 *,
 *::before,
 *::after {
@@ -6,8 +30,7 @@
 
 :root {
   --background-primary: #ffffff;
-  --background-secondary: #c6e1ff;
-  --background-special: #5f91ff;
+  --background-secondary: #5f91ff;
   --text-primary: #262626;
   --text-secondary: #ffffff;
   --focus: #2450ff;
@@ -24,7 +47,8 @@
   justify-content: stretch;
   margin: 0;
   height: 100%;
-  font-family: "Arial", sans-serif;
+  font-family: "Open Sans", "Arial", sans-serif;
+  font-size: 18px;
   color: var(--text-primary);
 }
 
@@ -37,7 +61,6 @@
   display: flex;
   justify-content: center;
   padding: 20px 0;
-  background-color: var(--background-secondary);
 }
 
 .main {
@@ -46,39 +69,38 @@
   align-items: center;
   gap: 20px;
   width: 100%;
-  padding: 40px 0;
 }
 
 .main__title {
   margin: 0;
   text-align: center;
+  font-family: "Find Cartoon", "Arial", sans-serif;
+}
+
+.main__image {
+  display: block;
+  margin: 0 auto 20px;
+  border-radius: 30px;
 }
 
 .main__output {
   padding: 30px 40px;
-  font-size: 18px;
   overflow-x: auto;
 }
 
 .main__output-text {
   margin: 0;
+  font-family: "Segoe UI Mono", "Courier New", monospace;
+  font-size: 20px;
 }
 
 .main__output-text--hide {
   display: none;
 }
 
-.footer {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0;
-  background-color: var(--background-secondary);
-}
-
 .button {
   padding: 10px 30px;
-  text-transform: uppercase;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 24px;
   border-radius: 40px;
   cursor: pointer;
@@ -99,8 +121,11 @@
 }
 
 .form__input {
-  font-size: 20px;
   width: 100%;
+  padding: 10px;
+  font-family: "Open Sans", "Arial", sans-serif;
+  font-size: 20px;
+  resize: vertical;
 }
 
 .form__input:focus {
@@ -110,6 +135,10 @@
 
 .form__input--error:not(:focus) {
   border-color: var(--alert);
+}
+
+.form__input--error:focus + .form__text-error--active {
+  display: none;
 }
 
 .form__text-error {
@@ -134,14 +163,14 @@
 .form__button,
 .form__button:active {
   color: var(--text-secondary);
-  background-color: var(--background-special);
-  border: 2px solid var(--background-special);
+  background-color: var(--background-secondary);
+  border: 2px solid var(--background-secondary);
 }
 
 .form__button:hover {
-  color: var(--background-special);
+  color: var(--background-secondary);
   background-color: var(--background-primary);
-  border-color: var(--background-special);
+  border-color: var(--background-secondary);
 }
 
 .form__button:active {
@@ -164,15 +193,55 @@
   opacity: 0.6;
 }
 
-table {
-  border-collapse: collapse;
+.footer {
+  display: flex;
+  justify-content: center;
 }
 
-table td {
-  font-size: 22px;
-  border: 1px solid #aaaaaa;
-  white-space: pre-wrap;
+.social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+}
 
+.social__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social__item-link {
+  width: 40px;
+  height: 40px;
+  transition: 0.2s;
+}
+
+.social__item-link:hover {
+  opacity: 0.6;
+}
+
+.social__item-link:active {
+  opacity: 0.3;
+}
+
+.social__item-link::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.social__item-link--github::before {
+  background-image: url("../images/icons/github.svg");
+}
+
+.social__item-link--developer::before {
+  background-image: url("../images/icons/nemtsevk.svg");
 }
 
 @media (min-width: 1280px) {
